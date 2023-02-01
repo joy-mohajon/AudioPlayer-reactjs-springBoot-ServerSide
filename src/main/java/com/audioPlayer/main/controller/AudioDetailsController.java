@@ -17,5 +17,24 @@ import com.audioPlayer.main.repository.AudioDetailsRepo;
 @RestController
 @RequestMapping("api/")
 public class AudioDetailsController {
-
+	
+	@Autowired
+	private AudioDetailsRepo audioRepo;
+	
+	@GetMapping("audios/")
+	public List<AudioDetails> getAudios() {
+		return this.audioRepo.findAll();
+	}	
+	
+	@PostMapping("audios/{id}/")
+	public String deleteAudio(@PathVariable int id) {
+		this.audioRepo.deleteById(id);
+		return "redirect:/audios";
+	}
+	
+	
+	@PostMapping("audios/add/")
+	public List<AudioDetails> addAudio(@RequestBody List<AudioDetails> audios) {
+		return this.audioRepo.saveAll(audios);
+	}
 }
